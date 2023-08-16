@@ -1,0 +1,94 @@
+<%= form_with(model: @place, url: maps_path, local: true) do |form| %>
+  <!-- フォームの内容 -->
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :latitude %>
+  <%= form.text_field :latitude %>
+
+  <%= form.label :longitude %>
+  <%= form.text_field :longitude %>
+
+  <%= form.label :image %>
+  <%= form.attachment_field :image %>
+
+  <%= form.submit %>
+<% end %>
+
+<div id='map'></div>
+<style>
+#map {
+  height: 600px;
+  width: 600px;
+}
+</style>
+
+<h2>地図にピンを表示</h2>
+
+<div id="map" style="height: 500px;"></div>
+
+<script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 35.682839, lng: 139.759455}, // 東京の座標
+      zoom: 10 // 初期のズームレベル
+    });
+
+    // @places からピンを追加する
+    <% @places.each do |place| %>
+      var marker = new google.maps.Marker({
+        position: {lat: <%= place.latitude %>, lng: <%= place.longitude %>},
+        map: map,
+        title: '<%= place.name %>'
+        
+      });
+      
+      // 吹き出し（情報ウィンドウ）作成
+      var infoWindow<%= place.id %> = new google.maps.InfoWindow({
+        content: '<h3>' + '<%= place.name %>' + '</h3>' +
+                 '<p><%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
+                 '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id": place.id %>'
+      });
+
+      // マーカーをクリックしたら情報ウィンドウを開く
+      marker.addListener('click', (function(marker, infoWindow) {
+        return function() {
+          infoWindow.open(map, marker);
+        };
+      })(marker, infoWindow<%= place.id %>));
+      
+      // 削除ボタンがクリックされたときの処理
+var deleteButtons = document.querySelectorAll('.delete-button');
+deleteButtons.forEach(function(deleteButton) {
+  deleteButton.addEventListener('click', function() {
+    var placeId = deleteButton.getAttribute('data-place-id');
+    // 削除リクエストを送信
+    fetch('/maps/' + placeId, { method: 'DELETE' })
+      .then(function(response) {
+        if (response.ok) {
+          // 削除が成功した場合の処理
+          var marker = markers[placeId];
+          if (marker) {
+            marker.setMap(null);
+          }
+        } else {
+          // 削除が失敗した場合の処理
+          console.error('削除に失敗しました');
+        }
+      });
+  });
+});
+
+      
+    <% end %>
+  }
+  
+  
+
+  // Google Maps APIの読み込み
+  var script = document.createElement('script');
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtURyIrXDlqiIj0KdKOuCtWuQGfzHAwBQ&callback=initMap';
+  script.defer = true;
+  script.async = true;
+  document.head.appendChild(script);
+</script>

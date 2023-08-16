@@ -1,0 +1,10 @@
+<!-- app/views/photos/index.html.erb -->
+<h1>Photo Album</h1>
+
+<div class="album">
+  <% @places.each do |place| %>
+  <div class="photo">
+    <%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %>
+  </div>
+<% end %>
+</div>

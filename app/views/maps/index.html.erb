@@ -1,8 +1,9 @@
-
 <h2>gmap</h2>
-<input id="address" type="textbox" value="GeekSalon">
+<input id="address" type="textbox" >
 <input type="button" value="Encode" onclick="codeAddress()">
-<div id="display">何かが表示される！</div>
+
+<div id="display">検索結果</div>
+
 <div id='map'></div>
 
 <style>
@@ -14,8 +15,9 @@
 
 <script>
 let map
+let geocoder
 const display = document.getElementById('display')
-
+let marker = null; // マーカーを保持する変数
 
 function initMap(){
   geocoder = new google.maps.Geocoder()
@@ -26,30 +28,30 @@ function initMap(){
   });
 
   marker = new google.maps.Marker({
-    position:  {lat: 40.7828, lng:-73.9653},
-    map: map
+  position:  {lat: 40.7828, lng:-73.9653},
+  map: map
   });
 }
 
-// ここから追加 
-let geocoder
-
 function codeAddress(){
+  if (marker) {
+    marker.setMap(null); // 前回のマーカーを削除
+  }
+
   let inputAddress = document.getElementById('address').value;
 
   geocoder.geocode( { 'address': inputAddress}, function(results, status) {
     if (status == 'OK') {
       map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
+      marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location
       });
-      display.textContent = "検索結果：" + results[ 0 ].geometry.location
+      display.textContent = "検索結果：" + results[0].geometry.location;
     } else {
       alert('該当する結果がありませんでした：' + status);
     }
   });   
 }
-// ここまで追加 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChZ5GdbK0aa3QPdIfzSq_JLzg1eEH4gQU&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtURyIrXDlqiIj0KdKOuCtWuQGfzHAwBQ&callback=initMap" async defer></script>
