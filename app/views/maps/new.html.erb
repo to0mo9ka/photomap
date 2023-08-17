@@ -4,10 +4,10 @@
   <%= form.text_field :name %>
 
   <%= form.label :latitude %>
-  <%= form.text_field :latitude %>
+  <%= form.text_field :latitude, value: @new_latitude || '' %>
 
   <%= form.label :longitude %>
-  <%= form.text_field :longitude %>
+  <%= form.text_field :longitude, value: @new_longitude || '' %>
 
   <%= form.label :image %>
   <%= form.attachment_field :image %>
@@ -29,11 +29,16 @@
 
 <script>
   function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 35.682839, lng: 139.759455}, // 東京の座標
-      zoom: 10 // 初期のズームレベル
-    });
+  // インスタンス変数 @center_latitude と @center_longitude を使用して中心座標を設定
+  var centerLatitude = <%= @center_latitude || 35.682839 %>;
+var centerLongitude = <%= @center_longitude || 139.759455 %>;
 
+  var map = new google.maps.Map(document.getElementById('map'), {
+    
+    center: {lat: centerLatitude, lng: centerLongitude},
+    zoom: 10
+  });
+  
     // @places からピンを追加する
     <% @places.each do |place| %>
       var marker = new google.maps.Marker({
@@ -47,6 +52,7 @@
       var infoWindow<%= place.id %> = new google.maps.InfoWindow({
         content: '<h3>' + '<%= place.name %>' + '</h3>' +
                  '<p><%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
+                 '<h4>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</h4>'+
                  '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id": place.id %>'
       });
 
