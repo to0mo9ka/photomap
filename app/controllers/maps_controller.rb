@@ -1,14 +1,13 @@
 class MapsController < ApplicationController
   def new
     @place = Place.new
-    
     @last_place = Place.last # 直前の投稿を取得
   end
 
   def create
     @place = Place.new(place_params)
     if @place.save
-      redirect_to new_map_path, notice: 'Place was successfully created.'
+      redirect_to photos_path, notice: 'Place was successfully created.'
     else
       render :new
     end

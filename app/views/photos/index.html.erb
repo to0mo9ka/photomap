@@ -3,7 +3,7 @@
 <div class="album">
   <% @places.each do |place| %>
     <div class="photo">
-      <%= link_to maps_index_path(place) do %>
+      <%= link_to photo_path(place) do %>
         <%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %>
       <% end %>
       <div>

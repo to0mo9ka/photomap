@@ -14,29 +14,12 @@ let geocoder
 const display = document.getElementById('display')
 let marker = null; // マーカーを保持する変数
 
-function initMap(){
-  geocoder = new google.maps.Geocoder()
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.7828, lng:-73.9653},
-    zoom: 14,
-  });
 
-  marker = new google.maps.Marker({
-  position:  {lat: 40.7828, lng:-73.9653},
-  map: map
-  });
-}
 
-function codeAddress(){
-  if (marker) {
-    marker.setMap(null); // 前回のマーカーを削除
-  }
-
-  
-}
 
   function initMap() {
+    geocoder = new google.maps.Geocoder()
     // インスタンス変数 @center_latitude と @center_longitude を使用して中心座標を設定
     var centerLatitude = <%= @center_latitude || 35.682839 %>;
     var centerLongitude = <%= @center_longitude || 139.759455 %>;
