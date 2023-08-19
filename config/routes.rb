@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'maps/index'
   root to: 'maps#index'
   get 'maps/new'
-  get 'photos/index'
   resources :maps, only: [:index, :new, :create, :destroy]
+  resources :photos, only: [:index, :destroy]
+
 end

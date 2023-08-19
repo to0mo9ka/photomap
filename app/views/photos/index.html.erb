@@ -1,15 +1,14 @@
-<!-- app/views/photos/index.html.erb -->
 <h1>Photo Album</h1>
 
 <div class="album">
   <% @places.each do |place| %>
-  <div class="photo">
-    <td>
-                      <%= link_to maps_new_path(place.id) do %>
-                        
-    <%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %>
-    </td>
-    <% end %>
-  </div>
-<% end %>
+    <div class="photo">
+      <%= link_to maps_new_path(latitude: place.latitude, longitude: place.longitude) do %>
+        <%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %>
+      <% end %>
+      <div>
+        <%= link_to "削除", photo_path(place), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+      </div>
+    </div>
+  <% end %>
 </div>

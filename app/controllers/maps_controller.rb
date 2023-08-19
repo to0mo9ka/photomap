@@ -7,20 +7,17 @@ class MapsController < ApplicationController
   def create
     @place = Place.new(place_params)
     if @place.save
-      
-
       flash[:notice] = 'Place was successfully created.'
-      # 新しい投稿の緯度と経度情報を取得
-      @new_latitude = params[:place][:latitude].to_f
-      @new_longitude = params[:place][:longitude].to_f
-
-      redirect_to new_map_path
+      redirect_to maps_new_path
+    else
+      @places = Place.all
+      render :new
     end
   end
-
+  
   def index
   end
-
+  
   def destroy
     @place = Place.find(params[:id])
     if @place.destroy
@@ -30,7 +27,7 @@ class MapsController < ApplicationController
     end
     redirect_to maps_new_path
   end
-
+  
   private
 
   def place_params
