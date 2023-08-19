@@ -43,7 +43,7 @@ function codeAddress(){
 
     var map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: centerLatitude, lng: centerLongitude},
-      zoom: 9
+      zoom: 5
     });
 
     var markers = [];
@@ -76,7 +76,7 @@ function codeAddress(){
       })(marker, infoWindow<%= place.id %>));
       
       // 地図の中心座標を設定（マーカーが作成された位置を中心に）
-      map.setCenter({lat: <%= place.latitude %>, lng: <%= place.longitude %>});
+      
 
       markers.push(marker);
       infoWindows.push(infoWindow<%= place.id %>);

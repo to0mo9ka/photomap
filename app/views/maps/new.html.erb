@@ -2,7 +2,7 @@
 <input id="address" type="textbox" >
 <input type="button" value="Encode" onclick="codeAddress()">
 
-<div id="display">検索結果</div>
+
 
 <div id='map'></div>
 
@@ -70,17 +70,26 @@ function codeAddress() {
   let inputAddress = document.getElementById('address').value;
 
   geocoder.geocode({ 'address': inputAddress }, function(results, status) {
-    if (status == 'OK') {
-      map.setCenter(results[0].geometry.location);
-      marker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-      });
-      display.textContent = "検索結果：" + results[0].geometry.location;
-    } else {
-      alert('該当する結果がありませんでした：' + status);
-    }
-  });   
+  if (status == 'OK') {
+    var latitude = results[0].geometry.location.lat();
+    var longitude = results[0].geometry.location.lng();
+
+    map.setCenter(results[0].geometry.location);
+    marker = new google.maps.Marker({
+      map: map,
+      position: results[0].geometry.location
+    });
+    
+    // 緯度と経度をテキストフィールドにセット
+    document.getElementById('latitude').value = latitude;
+    document.getElementById('longitude').value = longitude;
+    
+    
+  } else {
+    alert('該当する結果がありませんでした：' + status);
+  }
+});
+ 
 }
 
 // Google Maps APIの読み込み
@@ -97,11 +106,9 @@ document.head.appendChild(script);
   <%= form.label :name %>
   <%= form.text_field :name %>
 
-  <%= form.label :latitude %>
-  <%= form.text_field :latitude %>
-
-  <%= form.label :longitude %>
-  <%= form.text_field :longitude %>
+  <!-- 緯度と経度の隠しフィールド -->
+  <%= form.hidden_field :latitude, id: 'latitude' %>
+  <%= form.hidden_field :longitude, id: 'longitude' %>
 
   <%= form.label :image %>
   <%= form.attachment_field :image %>
