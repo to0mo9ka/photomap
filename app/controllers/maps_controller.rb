@@ -1,21 +1,21 @@
 class MapsController < ApplicationController
   def new
     @place = Place.new
-    @places = Place.all
+    
+    @last_place = Place.last # 直前の投稿を取得
   end
 
   def create
     @place = Place.new(place_params)
     if @place.save
-      flash[:notice] = 'Place was successfully created.'
-      redirect_to maps_new_path
+      redirect_to new_map_path, notice: 'Place was successfully created.'
     else
-      @places = Place.all
       render :new
     end
   end
   
   def index
+    @places = Place.all
   end
   
   def destroy
@@ -25,7 +25,7 @@ class MapsController < ApplicationController
     else
       flash[:alert] = 'Failed to delete place.'
     end
-    redirect_to maps_new_path
+    redirect_to maps_path
   end
   
   private

@@ -1,3 +1,97 @@
+<h2>gmap</h2>
+<input id="address" type="textbox" >
+<input type="button" value="Encode" onclick="codeAddress()">
+
+<div id="display">検索結果</div>
+
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 600px;
+}
+</style>
+
+<script>
+let map;
+let geocoder;
+const display = document.getElementById('display');
+let marker = null; // マーカーを保持する変数
+let lastPlaceMarker = null; // 最新の投稿のマーカーを保持する変数
+
+function initMap() {
+  geocoder = new google.maps.Geocoder();
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: 40.7828, lng: -73.9653 },
+    zoom: 14,
+  });
+
+  <% if @last_place.present? %>
+    var lastPlace = {
+      latitude: <%= @last_place.latitude %>,
+      longitude: <%= @last_place.longitude %>,
+      name: '<%= @last_place.name %>',
+      createdAt: '<%= @last_place.created_at.strftime('%Y/%m/%d') %>'
+    };
+
+    lastPlaceMarker = new google.maps.Marker({
+      position: { lat: lastPlace.latitude, lng: lastPlace.longitude },
+      map: map,
+      title: lastPlace.name
+    });
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: '<h3>' + lastPlace.name + '</h3>' +
+               '<p><%= attachment_image_tag @last_place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
+               '<h4>' + lastPlace.createdAt + '</h4>' 
+    });
+
+    lastPlaceMarker.addListener('click', function() {
+      infoWindow.open(map, lastPlaceMarker);
+    });
+
+    map.setCenter({ lat: lastPlace.latitude, lng: lastPlace.longitude });
+  <% end %>
+
+  // ...（他のマーカーの処理）...
+}
+
+function codeAddress() {
+  if (marker) {
+    marker.setMap(null); // 前回のマーカーを削除
+  }
+  
+  if (lastPlaceMarker) {
+    lastPlaceMarker.setMap(null); // lastPlace のマーカーを削除
+  }
+
+  let inputAddress = document.getElementById('address').value;
+
+  geocoder.geocode({ 'address': inputAddress }, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location
+      });
+      display.textContent = "検索結果：" + results[0].geometry.location;
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });   
+}
+
+// Google Maps APIの読み込み
+var script = document.createElement('script');
+script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtURyIrXDlqiIj0KdKOuCtWuQGfzHAwBQ&callback=initMap';
+script.defer = true;
+script.async = true;
+document.head.appendChild(script);
+
+</script>
+
 <%= form_with(model: @place, url: maps_path, local: true) do |form| %>
   <!-- フォームの内容 -->
   <%= form.label :name %>
@@ -14,71 +108,3 @@
 
   <%= form.submit %>
 <% end %>
-
-<div id='map'></div>
-<style>
-#map {
-  height: 600px;
-  width: 600px;
-}
-</style>
-
-<h2>地図にピンを表示</h2>
-
-<div id="map" style="height: 500px;"></div>
-
-<script>
-  function initMap() {
-    // インスタンス変数 @center_latitude と @center_longitude を使用して中心座標を設定
-    var centerLatitude = <%= @center_latitude || 35.682839 %>;
-    var centerLongitude = <%= @center_longitude || 139.759455 %>;
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: centerLatitude, lng: centerLongitude},
-      zoom: 9
-    });
-
-    var markers = [];
-    var infoWindows = [];
-
-    // @places からピンを追加する
-    <% @places.each do |place| %>
-      var marker = new google.maps.Marker({
-        position: {lat: <%= place.latitude %>, lng: <%= place.longitude %>},
-        map: map,
-        title: '<%= place.name %>'
-      });
-
-      // 吹き出し（情報ウィンドウ）作成
-      var infoWindow<%= place.id %> = new google.maps.InfoWindow({
-        content: '<h3>' + '<%= place.name %>' + '</h3>' +
-                 '<p><%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
-                 '<h4>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</h4>'+
-                 '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id": place.id %>'
-      });
-
-      // マーカーをクリックしたら情報ウィンドウを開く
-      marker.addListener('click', (function(marker, infoWindow) {
-        return function() {
-          for (var i in markers) {
-            infoWindows[i].close(map, markers[i]);
-          }
-          infoWindow.open(map, marker);
-        };
-      })(marker, infoWindow<%= place.id %>));
-      
-      // 地図の中心座標を設定（マーカーが作成された位置を中心に）
-      map.setCenter({lat: <%= place.latitude %>, lng: <%= place.longitude %>});
-
-      markers.push(marker);
-      infoWindows.push(infoWindow<%= place.id %>);
-  
-    <% end %>
-  }
-  // Google Maps APIの読み込み
-  var script = document.createElement('script');
-  script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtURyIrXDlqiIj0KdKOuCtWuQGfzHAwBQ&callback=initMap';
-  script.defer = true;
-  script.async = true;
-  document.head.appendChild(script);
-</script>
