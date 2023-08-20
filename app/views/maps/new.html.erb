@@ -106,9 +106,11 @@ document.head.appendChild(script);
   <%= form.label :name %>
   <%= form.text_field :name %>
 
-  <!-- 緯度と経度の隠しフィールド -->
-  <%= form.hidden_field :latitude, id: 'latitude' %>
-  <%= form.hidden_field :longitude, id: 'longitude' %>
+  <%= form.label :latitude %>
+  <%= form.text_field :latitude, id: 'latitude'%>
+
+  <%= form.label :longitude %>
+  <%= form.text_field :longitude, id: 'longitude' %>
 
   <%= form.label :image %>
   <%= form.attachment_field :image %>

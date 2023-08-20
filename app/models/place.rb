@@ -4,4 +4,5 @@ class Place < ApplicationRecord
   validates :image, presence: true
   # mini_magickのバリエーションなどの設定も含まれていることを確認してください
   # 例: process :resize_to_limit => [800, 800]
+  belongs_to :user
 end
