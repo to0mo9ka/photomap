@@ -66,6 +66,7 @@ let marker = null; // マーカーを保持する変数
   
     <% end %>
   }
+  
   // Google Maps APIの読み込み
   var script = document.createElement('script');
   script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtURyIrXDlqiIj0KdKOuCtWuQGfzHAwBQ&callback=initMap';
@@ -73,3 +74,7 @@ let marker = null; // マーカーを保持する変数
   script.async = true;
   document.head.appendChild(script);
 </script>
+
+
+  <%= link_to "新規投稿",maps_new_path %>
+  
