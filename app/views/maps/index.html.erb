@@ -44,9 +44,9 @@ let marker = null; // マーカーを保持する変数
       var infoWindow<%= place.id %> = new google.maps.InfoWindow({
         content: '<h3>' + '<%= place.name %>' + '</h3>' +
                  '<p><%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
-                 '<h4>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</h4>'+
+                 '<h4>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</h4>'+'<% if place.user == current_user %>'+
                  '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id": place.id %>'
-      });
+      +'<% end %>'});
 
       // マーカーをクリックしたら情報ウィンドウを開く
       marker.addListener('click', (function(marker, infoWindow) {

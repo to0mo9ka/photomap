@@ -11,6 +11,6 @@ class PhotosController < ApplicationController
   def destroy
   @place = Place.find(params[:id])
   @place.destroy
-  redirect_to photos_path, notice: "場所情報を削除しました"
+  redirect_to photos_index_path, notice: "場所情報を削除しました"
   end
 end

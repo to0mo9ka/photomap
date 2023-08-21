@@ -47,7 +47,8 @@ function initMap() {
         content: '<h3>' + '<%= place.name %>' + '</h3>' +
                  '<p><%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
                  '<h4>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</h4>'+
-                 '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id": place.id %>'
+                 '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id" => place.id %>'
+
       });
 
       // マーカーをクリックしたら情報ウィンドウを開く

@@ -7,7 +7,10 @@
         <%= attachment_image_tag place, :image, :fill, 100, 100, format: 'jpeg' %>
       <% end %>
       <span>
-        <%= link_to "削除", photo_path(place), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+        <% if place.user == current_user %>
+        <%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id" => place.id %>
+
+      <% end %>
       </span>
     </span>
   <% end %>

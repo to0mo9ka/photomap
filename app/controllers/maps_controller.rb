@@ -3,7 +3,8 @@ class MapsController < ApplicationController
     @place = Place.new
     @last_place = Place.last # 直前の投稿を取得
   end
-
+  
+  
   def create
     @place = current_user.places.build(place_params)
     if @place.save
