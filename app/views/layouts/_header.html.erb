@@ -10,13 +10,6 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <% if user_signed_in? %>
-          <li>
-            <a class="nav-link text-light" rel="nofollow" data-method="delete" href="/users/sign_out">
-              <i class="fas fa-sign-out-alt"></i>ログアウト
-            </a>
-          </li>
-          <li>
-             <!-- ログイン後のHomeリンクは未実装です。自分で調べて実装してみましょう -->
              <a class="nav-link text-light" href="/maps">
               <i class="fas fa-home"></i>Home
             </a>
@@ -28,19 +21,25 @@
           </li>
           <li>
             <a class="nav-link text-light" href="/maps/new">
-              <i class="fas fa-book-open"></i>新規投稿
+              <i class="fas fa-plus"></i>新規投稿
             </a>
           </li>
           <li>
             <a class="nav-link text-light" href="<%= user_path(current_user.id) %>">
-              <i class="fas fa-book-open"></i>マイページ
+              <i class="fas fa-user"></i>マイページ
             </a>
           </li>
           <li>
             <a class="nav-link text-light" href="/photos/index">
-              <i class="fas fa-book-open"></i>PhotoAlbum
+              <i class="fas fa-image"></i>PhotoAlbum
             </a>
           </li>
+          <li>
+            <a class="nav-link text-light" rel="nofollow" data-method="delete" href="/users/sign_out">
+              <i class="fas fa-sign-out-alt"></i>ログアウト
+            </a>
+          </li>
+          <li>
     <% else %>
           <li>
             <a class="nav-link text-light" href="/">

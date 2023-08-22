@@ -144,6 +144,7 @@ GEM
     msgpack (1.7.1)
     mustermann (1.1.2)
       ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.5)
     net-imap (0.3.6)
       date
       net-protocol
@@ -296,6 +297,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
+  mysql2 (>= 0.4.4, < 0.6.0)
   puma (~> 3.11)
   rails (~> 5.2.5)
   refile!
