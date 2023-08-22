@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   
   resources :users, only: [:show, :create]
   resources :maps, only: [:index, :show, :new, :create, :destroy]
-  resources :photos, only: [:show, :index, :destroy]
+  resources :photos, only: [:index, :destroy]
 end

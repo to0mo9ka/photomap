@@ -73,4 +73,6 @@ gem "refile", require: "refile/rails", github: 'manfe/refile'
 # 画像加工用（サイズ調整など）gem
 gem "refile-mini_magick"
 
+gem 'lightbox2-rails'
+
 gem 'mysql2', '>= 0.4.4', '< 0.6.0' , group: :production

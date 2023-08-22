@@ -4,9 +4,9 @@ class PhotosController < ApplicationController
     
   end
   
-  def show
-    @place = Place.find(params[:id])
-  end
+  #def show
+    #@place = Place.find(params[:id])
+  #end
   
   def destroy
   @place = Place.find(params[:id])
