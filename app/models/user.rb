@@ -4,10 +4,10 @@ class User < ApplicationRecord
     private_account: 1
   }
   
-  after_initialize :set_default_account_type, if: :new_record?
-  def set_default_account_type
-    self.account_type ||= :public_account
-  end
+  #after_initialize :set_default_account_type, if: :new_record?
+  #def set_default_account_type
+    #self.account_type ||= :public_account
+  #end
   
   def self.account_types
     {
