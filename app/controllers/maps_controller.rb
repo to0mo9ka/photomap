@@ -8,7 +8,7 @@ class MapsController < ApplicationController
   def create
     @place = current_user.places.build(place_params)
     if @place.save
-      redirect_to photos_path, notice: 'Place was successfully created.'
+      redirect_to user_path(current_user), notice: 'Place was successfully created.'
     else
       render :new
     end
@@ -31,6 +31,6 @@ class MapsController < ApplicationController
   private
 
   def place_params
-    params.require(:place).permit(:name, :latitude, :longitude, :image)
+    params.require(:place).permit(:name, :body, :latitude, :longitude, :image)
   end
 end

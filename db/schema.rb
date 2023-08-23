@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2023_08_20_073358) do
 
   create_table "places", force: :cascade do |t|
     t.string "name"
+    t.text "body"
     t.float "latitude"
     t.float "longitude"
     t.string "image_id"

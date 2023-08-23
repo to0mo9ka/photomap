@@ -105,6 +105,9 @@ document.head.appendChild(script);
   <!-- フォームの内容 -->
   <%= form.label :name %>
   <%= form.text_field :name %>
+  
+  <%= form.label :comment %>
+  <%= form.text_field :body %>
 
   <!-- 緯度と経度の隠しフィールド -->
   <%= form.hidden_field :latitude, id: 'latitude' %>
