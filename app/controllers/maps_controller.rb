@@ -15,7 +15,7 @@ class MapsController < ApplicationController
   end
   
   def index
-    @places = Place.all
+    @places = Place.where(user_id: [current_user.id, 0])
   end
   
   def destroy
