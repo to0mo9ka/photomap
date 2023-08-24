@@ -1,9 +1,11 @@
+<div class="col-sm-12 col-md-8 col-lg-5">
 <h2>gmap</h2>
 <input id="address" type="textbox" >
 <input type="button" value="Encode" onclick="codeAddress()">
 
 
-
+<div class="d-flex">
+<div>
 <div id='map'></div>
 
 <style>
@@ -100,21 +102,27 @@ script.async = true;
 document.head.appendChild(script);
 
 </script>
-
+</div>
+<div>
+  
 <%= form_with(model: @place, url: maps_path, local: true) do |form| %>
   <!-- フォームの内容 -->
   <%= form.label :name %>
   <%= form.text_field :name %>
-  
+  <div>
   <%= form.label :comment %>
   <%= form.text_field :body %>
 
   <!-- 緯度と経度の隠しフィールド -->
   <%= form.hidden_field :latitude, id: 'latitude' %>
   <%= form.hidden_field :longitude, id: 'longitude' %>
-
+</div>
+<div>
   <%= form.label :image %>
   <%= form.attachment_field :image %>
-
+</div>
   <%= form.submit %>
 <% end %>
+</div>
+</div>
+</div>

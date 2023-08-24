@@ -2,10 +2,13 @@
     <%= flash[:notice] %>
 </p>
 
+<div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
 <div>
   <div class="d-flex">
+    
   <%= attachment_image_tag @user, :profile_image, width: 50, height: 50, format: 'jpeg', fallback: "default-image2.jpg", style: 'border-radius: 50%' %>
   <h3><%= @user.name %></h3>
+  
   <% if current_user != @user %>
     <% if current_user.following?(@user) %>
       <% if @user.private_account? %>
@@ -26,6 +29,17 @@
     <% end %>
   <% end %>
   
+  
+  <div class='col-md-2 offset-md-1'>
+  <div class='row'>
+  <% if @user == current_user %>
+    <a class="btn btn-outline-secondary btn-block" href="<%= edit_user_path(current_user) %>">
+      <i class="fas fa-user-cog"></i>
+    </a>
+  <% end %>
+</div>
+</div>
+  
   </div>
   <h6><%= @user.introduction %></h6>
   <div class="d-flex">
@@ -38,17 +52,9 @@
    </div>
   
    
-  
-   
-  <div class='row'>
-  <% if @user == current_user %>
-    <a class="btn btn-outline-secondary btn-block" href="<%= edit_user_path(current_user) %>">
-      <i class="fas fa-user-cog"></i>
-    </a>
-  <% end %>
+
 </div>
-  
-</div>
+
 
 <div id='map'></div>
 
@@ -117,6 +123,7 @@ function initMap() {
   
   
   
+  
   // Google Maps APIの読み込み
   var script = document.createElement('script');
   script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtURyIrXDlqiIj0KdKOuCtWuQGfzHAwBQ&callback=initMap';
@@ -124,4 +131,5 @@ function initMap() {
   script.async = true;
   document.head.appendChild(script);
 </script>
+</div>
 
