@@ -22,6 +22,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
          
   has_many :places, dependent: :destroy
+  attachment :profile_image
+  
+  validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 20 }
+  validates :introduction, length: { maximum: 50 }
   
   has_many :following_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followed_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy

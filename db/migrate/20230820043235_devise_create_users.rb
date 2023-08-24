@@ -35,6 +35,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.datetime :locked_at
 
       t.string :name
+      t.text :introduction  # 自己紹介文
+      t.string :profile_image_id  # 「refile」による画像保存用
       t.timestamps null: false
     end
 
