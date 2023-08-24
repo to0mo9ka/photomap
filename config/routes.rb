@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post '/approve_request/:request_id', to: 'information#approve_request', as: 'approve_request'
   delete '/reject_request/:request_id', to: 'information#reject_request', as: 'reject_request'
   
-  resources :users, only: [:index, :show, :create, :edit, :update]do
+  resources :users, only: [:index, :show, :edit, :update]do
     member do
       get :follows, :followers
     end
