@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get 'maps/new'
   get 'photos/index'
   get 'photos/:id'=>'photos#show', as:'photo'
+  get '/information', to: 'information#index', as: 'information_index'
+  post '/approve_request/:request_id', to: 'information#approve_request', as: 'approve_request'
+  delete '/reject_request/:request_id', to: 'information#reject_request', as: 'reject_request'
   
   resources :users, only: [:index, :show, :create, :edit, :update]do
     member do

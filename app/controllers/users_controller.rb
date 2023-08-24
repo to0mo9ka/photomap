@@ -5,13 +5,15 @@ class UsersController < ApplicationController
     @follower_users = @user.follower_user
     
     if @user.private_account?
-      if  @user != current_user
-      redirect_to users_path
+      if !current_user.approved_follow_request?(@user) && @user != current_user
+        @places = []
+      # 非公開のメッセージを表示するコードを追加
+        puts "User's videos are private and follow request is not approved."
       else
-      @places = @user.places.page(params[:page]).reverse_order
+        @places = @user.places.page(params[:page]).reverse_order
       end
     else
-    @places = @user.places.page(params[:page]).reverse_order
+      @places = @user.places.page(params[:page]).reverse_order
     end
   end
   
