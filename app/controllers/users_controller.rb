@@ -1,16 +1,50 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    # アクセス権限のチェック
-    if @user != current_user && @user.account_type != 'public_account'
-      redirect_to users_path, alert: "Access denied."
-      return
+    @following_users = @user.following_user
+    @follower_users = @user.follower_user
+    
+    if @user.private_account?
+      if  @user != current_user
+      redirect_to users_path
+      else
+      @places = @user.places.page(params[:page]).reverse_order
+      end
+    else
+    @places = @user.places.page(params[:page]).reverse_order
     end
-    @places = @user.places
   end
   
   def index
     @users = User.all
+  end
+  
+  def follow
+  @user = User.find(params[:id])
+  if current_user.following?(@user)
+    current_user.unfollow(@user)
+    flash[:notice] = "フォローを解除しました。"
+  elsif @user.private_account?
+    current_user.follow(@user, status: :pending)
+    flash[:notice] = "フォローリクエストを送信しました。"
+  else
+    current_user.follow(@user, status: :approved)
+    flash[:notice] = "フォローしました。"
+  end
+
+
+  redirect_to @user
+  end
+
+
+  def follows
+    user = User.find(params[:id])
+    @users = user.following_user.page(params[:page]).per(10).reverse_order
+  end
+
+  def followers
+    user = User.find(params[:id])
+    @users = user.follower_user.page(params[:page]).per(10).reverse_order
   end
   
   def edit

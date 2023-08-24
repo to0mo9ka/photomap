@@ -12,7 +12,13 @@ Rails.application.routes.draw do
   get 'photos/index'
   get 'photos/:id'=>'photos#show', as:'photo'
   
-  resources :users, only: [:index, :show, :create, :edit, :update]
+  resources :users, only: [:index, :show, :create, :edit, :update]do
+    member do
+      get :follows, :followers
+    end
+    resource :relationships, only: [:create, :destroy]
+  end
+  
   resources :maps, only: [:index, :show, :new, :create, :destroy]
   resources :photos, only: [:index, :destroy]
 end
