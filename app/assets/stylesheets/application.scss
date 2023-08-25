@@ -19,3 +19,15 @@
  @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+.image-container {
+  max-width: 100%;
+  height: auto;
+  max-height: 200px;
+}
+
+.square-image {
+  width: 100px; /* 正方形のサイズを指定 */
+  height: 100px;
+  object-fit: cover;
+}
