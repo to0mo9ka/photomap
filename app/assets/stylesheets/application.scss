@@ -26,6 +26,14 @@
   max-height: 200px;
 }
 
+@media (max-width: 767px) {
+.image-container {
+  width: 100px; /* 正方形のサイズを指定 */
+  height: 100px;
+  object-fit: cover;
+}
+}
+
 .square-image {
   width: 100px; /* 正方形のサイズを指定 */
   height: 100px;
@@ -38,3 +46,15 @@
   object-fit: cover;
 }
 
+
+#map {
+  width: 100%; /* 幅を100%にすることで親要素に合わせて伸縮する */
+  height: 600px; /* 固定の高さを保持 */
+}
+
+/* 携帯端末向けのスタイル */
+@media (max-width: 767px) {
+  #map {
+    height: 300px; /* 小さな画面では高さを調整 */
+  }
+}

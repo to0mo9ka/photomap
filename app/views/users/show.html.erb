@@ -4,7 +4,7 @@
 
 <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
 <div>
-  <div class="d-flex">
+
     
   <%= attachment_image_tag @user, :profile_image, class: "square-image2", format: 'jpeg', fallback: "default-image2.jpg", style: 'border-radius: 50%' %>
   <h3><%= @user.name %></h3>
@@ -29,7 +29,7 @@
     <% end %>
   <% end %>
   
-  
+  <div class="d-flex">
   <div class='col-md-2 offset-md-1'>
   <div class='row'>
   <% if @user == current_user %>
@@ -46,11 +46,11 @@
     <a class="btn btn-outline-secondary btn-block" href="<%= user_photos_path(@user) %>">
       <i class="fas fa-image"></i>
     </a>
-  
+ </div> 
 </div>
 </div>
   
-  </div>
+  
   <h6><%= @user.introduction %></h6>
   <div class="d-flex">
      <%= link_to follows_user_path(@user) do %>
@@ -69,10 +69,7 @@
 <div id='map'></div>
 
 <style>
-#map {
-  height: 600px;
-  width: 600px;
-}
+#map 
 </style>
 
 <script>
@@ -105,9 +102,9 @@ function initMap() {
 
       // 吹き出し（情報ウィンドウ）作成
       var infoWindow<%= place.id %> = new google.maps.InfoWindow({
-        content: '<h3>' + '<%= place.name %>' + '</h3>' +
+        content: '<p>' + '<%= place.name %>' + '</p>' +
                  '<p><%= link_to image_tag(place.image_url, class: "image-container"), place.image_url, data: { lightbox: 'place', title: place.body } %></p>'+
-                 '<h4>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</h4>'+'<% if place.user == current_user %>'+
+                 '<p>'+'<%= place.created_at.strftime('%Y/%m/%d') %>'+'</p>'+'<% if place.user == current_user %>'+
                  '<%= link_to "削除", map_path(place), method: :delete, data: { confirm: '本当に消しますか？' }, class: 'delete-button', "data-place-id" => place.id %>'+'<% end %>'
 
       });

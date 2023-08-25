@@ -4,15 +4,12 @@
 <input type="button" value="Encode" onclick="codeAddress()">
 
 
-<div class="d-flex">
+
 <div>
 <div id='map'></div>
 
 <style>
-#map {
-  height: 600px;
-  width: 600px;
-}
+#map
 </style>
 
 <script>
@@ -45,9 +42,9 @@ function initMap() {
     });
 
     var infoWindow = new google.maps.InfoWindow({
-      content: '<h3>' + lastPlace.name + '</h3>' +
-               '<p><%= attachment_image_tag @last_place, :image, :fill, 100, 100, format: 'jpeg' %></p>'+
-               '<h4>' + lastPlace.createdAt + '</h4>' 
+      content: '<p>' + lastPlace.name + '</p>' +
+               '<p><%= attachment_image_tag @last_place, :image, class: "image-container", format: 'jpeg' %></p>'+
+               '<p>' + lastPlace.createdAt + '<p>' 
     });
 
     lastPlaceMarker.addListener('click', function() {
@@ -123,6 +120,5 @@ document.head.appendChild(script);
 </div>
   <%= form.submit %>
 <% end %>
-</div>
 </div>
 </div>
