@@ -17,6 +17,24 @@ class UsersController < ApplicationController
     end
   end
   
+  def photos
+    @user = User.find(params[:id])
+   
+    
+    @following_users = @user.following_user
+    @follower_users = @user.follower_user
+    
+    if @user.private_account?
+      if !current_user.approved_follow_request?(@user) && @user != current_user
+        redirect_to user_path(@user)
+      else
+        @user_photos = @user.places
+      end
+    else
+      @user_photos = @user.places
+    end
+  end
+  
   def index
     @users = User.all
   end

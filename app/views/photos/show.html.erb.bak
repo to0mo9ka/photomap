@@ -1,3 +1,11 @@
-<h2>詳細画面</h2>
-<p><%= @place.name %></p>
-<p><%= attachment_image_tag @place, :image, :fill, 1000, 1000, format: 'jpeg' %></p>
+<div class="album">
+  <% @places.each do |place| %>
+
+      
+        
+      <%= link_to image_tag(place.image_url, class: "square-image"), place.image_url, data: { lightbox: 'place', title: place.body } %>
+       
+      
+   
+  <% end %>
+</div>

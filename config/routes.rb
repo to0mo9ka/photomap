@@ -11,13 +11,14 @@ Rails.application.routes.draw do
   get 'maps/new'
   get 'photos/index'
   get 'photos/:id'=>'photos#show', as:'photo'
-  get '/information', to: 'information#index', as: 'information_index'
+  get '/users/:id/photos', to: 'users#photos', as: :user_photos
+  get '/information/index', to: 'information#index', as: 'information_index'
   post '/approve_request/:request_id', to: 'information#approve_request', as: 'approve_request'
   delete '/reject_request/:request_id', to: 'information#reject_request', as: 'reject_request'
   
   resources :users, only: [:index, :show, :edit, :update]do
     member do
-      get :follows, :followers
+      get :follows, :followers, :photos # users/:id/photos にアクセスしたときに、UserController の photos アクションを呼び出す
     end
     resource :relationships, only: [:create, :destroy]
   end
