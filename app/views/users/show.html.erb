@@ -6,7 +6,7 @@
 <div>
   <div class="d-flex">
     
-  <%= attachment_image_tag @user, :profile_image, width: 50, height: 50, format: 'jpeg', fallback: "default-image2.jpg", style: 'border-radius: 50%' %>
+  <%= attachment_image_tag @user, :profile_image, class: "square-image2", format: 'jpeg', fallback: "default-image2.jpg", style: 'border-radius: 50%' %>
   <h3><%= @user.name %></h3>
   
   <% if current_user != @user %>

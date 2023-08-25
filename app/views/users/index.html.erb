@@ -12,7 +12,7 @@
                       <div class="one-post card w-100">
                       <%= link_to user_path(user) do %>
                       <p class="caption h4">
-                        <%= attachment_image_tag user, :profile_image, width: 50, height: 50, format: 'jpeg', fallback: "default-image2.jpg", style: 'border-radius: 50%'%>
+                        <%= attachment_image_tag user, :profile_image, class: "square-image2", format: 'jpeg', fallback: "default-image2.jpg", style: 'border-radius: 50%'%>
                     
                       
                           <%= user.name %>

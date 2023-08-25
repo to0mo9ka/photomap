@@ -28,10 +28,10 @@ class UsersController < ApplicationController
       if !current_user.approved_follow_request?(@user) && @user != current_user
         redirect_to user_path(@user)
       else
-        @user_photos = @user.places
+        @user_photos = @user.places.order(created_at: :desc)
       end
     else
-      @user_photos = @user.places
+      @user_photos = @user.places.order(created_at: :desc)
     end
   end
   

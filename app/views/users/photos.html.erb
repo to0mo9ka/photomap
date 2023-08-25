@@ -1,7 +1,3 @@
 <% @user_photos.each do |place| %>
-  
-    <%= link_to image_tag(place.image_url, class: "square-image"), place.image_url, data: { lightbox: 'place', title: place.body } %>
-       
-    <!-- ここに写真の詳細リンクやその他の情報を追加 -->
-  
+  <%= link_to image_tag(place.image_url, class: "square-image"), place.image_url, data: { lightbox: 'place', title: place.body } %>
 <% end %>
